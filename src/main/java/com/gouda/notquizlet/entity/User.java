@@ -2,31 +2,28 @@ package com.gouda.notquizlet.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 public class User {
+    @Column(name = "id")
     @Id
     @GeneratedValue
     private long id;
+    @Column(name = "sets")
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FlashSet> sets;
+    private Set<FlashSet> sets;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "email", unique = true)
     private String email;
 
-    public User(long id, String username, String password, List<FlashSet> sets, String email) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.sets = sets;
-        this.email = email;
-    }
-    public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-    }
 
     public long getId() {
         return id;
@@ -34,6 +31,14 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Set<FlashSet> getSets() {
+        return sets;
+    }
+
+    public void setSets(TreeSet<FlashSet> sets) {
+        this.sets = sets;
     }
 
     public String getUsername() {
@@ -50,14 +55,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<FlashSet> getSets() {
-        return sets;
-    }
-
-    public void setSets(List<FlashSet> sets) {
-        this.sets = sets;
     }
 
     public String getEmail() {

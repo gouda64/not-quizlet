@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface FlashSetRepository extends JpaRepository<FlashSet,Long> {
     FlashSet findById(long id);
-    List<FlashSet> findAllByUserId(long id);
+    List<FlashSet> findAllByName(String name);
 }

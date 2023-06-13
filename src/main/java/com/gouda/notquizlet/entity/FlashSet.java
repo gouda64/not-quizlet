@@ -7,28 +7,26 @@ import java.util.List;
 
 @Entity
 public class FlashSet {
+    @Column(name = "id")
     @Id
     @GeneratedValue
     private long id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "cards")
     @OneToMany(cascade = CascadeType.ALL)
     private List<Flashcard> flashcards = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    private final User owner;
+    private User owner; //final?? how tf does spring boot work
     //private List<Integer> starred;
     //private String description;
     //private List<Tag> tags;
     //TODO: impl later
 
-    public FlashSet(long id, List<Flashcard> flashcards, User owner) {
-        this.id = id;
-        this.flashcards = flashcards;
-        this.owner = owner;
-    }
-    public FlashSet(User owner) {
-
-        this.owner = owner;
-    }
 
     public long getId() {
         return id;
@@ -48,5 +46,13 @@ public class FlashSet {
 
     public User getOwner() {
         return owner;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

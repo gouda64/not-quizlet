@@ -12,16 +12,6 @@ public class Flashcard {
     private String term;
     private String definition;
 
-    public Flashcard(long id, String term, String definition) {
-        this.id = id;
-        this.term = term;
-        this.definition = definition;
-    }
-    public Flashcard(String term, String definition) {
-        this.term = term;
-        this.definition = definition;
-    }
-
     public long getId() {
         return id;
     }
