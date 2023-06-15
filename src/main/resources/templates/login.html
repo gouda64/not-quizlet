@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    <script src="https://kit.fontawesome.com/f8a8820565.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/f8a8820565.js" crossorigin="anonymous"></script>
-    <title>Home</title>
+    <title>Log In</title>
 </head>
 <body>
     <header th:insert="~{/fragments/general.html :: header}"></header>
-    Home
+
+    <form th:action="@{/login}" method="post" th:object="${loginForm}">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="flashcat64">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password</label>
+            <input type="password" th:field="*{password}" class="form-control" id="pwd" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
 </body>
 </html>
