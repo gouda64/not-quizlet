@@ -21,6 +21,7 @@ public class StartupRunner implements CommandLineRunner {
         User user = new User();
         user.setUsername("foo");
         user.setPassword("pass");
+        user.setPasswordMatching("pass");
         user.setEmail("foo@example.com");
         userService.save(user);
     }

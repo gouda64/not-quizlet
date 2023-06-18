@@ -1,13 +1,15 @@
 package com.gouda.notquizlet.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
-import java.util.TreeSet;
 
 @Entity
 public class User {
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     @Id
     @GeneratedValue
     private long id;
@@ -15,13 +17,24 @@ public class User {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<FlashSet> sets;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
+    @NotNull
+    @NotBlank
     private String username;
 
     @Column(name = "password")
+    @NotNull
+    @NotBlank
     private String password;
 
+    @NotNull
+    @NotBlank
+    private String passwordMatching;
+
     @Column(name = "email", unique = true)
+    @Email
+    @NotNull
+    @NotBlank
     private String email;
 
 
@@ -37,7 +50,7 @@ public class User {
         return sets;
     }
 
-    public void setSets(TreeSet<FlashSet> sets) {
+    public void setSets(Set<FlashSet> sets) {
         this.sets = sets;
     }
 
@@ -63,5 +76,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPasswordMatching() {
+        return passwordMatching;
+    }
+
+    public void setPasswordMatching(String passwordMatching) {
+        this.passwordMatching = passwordMatching;
     }
 }

@@ -20,7 +20,7 @@ public class FlashSet {
     private List<Flashcard> flashcards = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    @JoinColumn(name = "owner", referencedColumnName = "id")
     private User owner; //final?? how tf does spring boot work
     //private List<Integer> starred;
     //private String description;
