@@ -29,6 +29,9 @@ public class SignUpValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "error.register.username_empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.register.password_empty");
 
+        if (!user.getUsername().matches("\\S+")) {
+            errors.rejectValue("username", "error.register.username_spaces");
+        }
         if (user.getUsername().length() < 4) {
             errors.rejectValue("username", "error.register.username_min");
         }

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="~{/fragments/general.html :: header-css}">
     <title>404</title>
 </head>
 <body>
+    <header th:insert="~{/fragments/general.html :: header}"></header>
+
     Sorry! The page you're looking for doesn't exist!
 </body>
 </html>

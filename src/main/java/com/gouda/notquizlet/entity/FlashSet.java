@@ -44,6 +44,10 @@ public class FlashSet {
         this.flashcards = flashcards;
     }
 
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     public User getOwner() {
         return owner;
     }

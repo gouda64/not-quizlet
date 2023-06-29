@@ -23,12 +23,8 @@ public class User {
     private String username;
 
     @Column(name = "password")
-    @NotNull
-    @NotBlank
     private String password;
 
-    @NotNull
-    @NotBlank
     private String passwordMatching;
 
     @Column(name = "email", unique = true)
@@ -37,6 +33,10 @@ public class User {
     @NotBlank
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
+
+    private boolean enabled;
 
     public long getId() {
         return id;
@@ -84,5 +84,21 @@ public class User {
 
     public void setPasswordMatching(String passwordMatching) {
         this.passwordMatching = passwordMatching;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

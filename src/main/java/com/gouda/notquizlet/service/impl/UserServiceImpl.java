@@ -1,11 +1,13 @@
 package com.gouda.notquizlet.service.impl;
 
+import com.gouda.notquizlet.entity.Provider;
 import com.gouda.notquizlet.entity.User;
 import com.gouda.notquizlet.repository.UserRepository;
 import com.gouda.notquizlet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,6 +37,8 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setPasswordMatching(user.getPassword());
         user.setSets(new HashSet<>());
+        user.setProvider(Provider.LOCAL);
+        user.setEnabled(true); //for now
         //TODO: pepper?
         userRepository.save(user);
     }
@@ -43,10 +47,10 @@ public class UserServiceImpl implements UserService {
     public void login(String username, String password) {
         UserDetails ud = userDetailsService.loadUserByUsername(username);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(ud, password, ud.getAuthorities());
-        authenticationManager.authenticate(token);
+        Authentication authentication = authenticationManager.authenticate(token);
 
-        if (token.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(token);
+        if (authentication.isAuthenticated()) {
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
     }
 
@@ -63,5 +67,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(long id) {
         return userRepository.findById(id);
+    }
+
+    @Override
+    public void processOAuthPostLogin(String email) {
+        User existUser = userRepository.findByEmail(email);
+
+        if (existUser == null) {
+            User newUser = new User();
+            newUser.setUsername(email); //todo: maybe change later idk
+            newUser.setEmail(email);
+            newUser.setProvider(Provider.GOOGLE); //change if adding more
+            newUser.setEnabled(true);
+
+            userRepository.save(newUser);
+        }
     }
 }

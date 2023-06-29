@@ -10,4 +10,5 @@ public interface UserService {
     User findByUsername(String username);
     User findByEmail(String email);
     User findById(long id);
+    void processOAuthPostLogin(String username);
 }
