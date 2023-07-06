@@ -3,13 +3,18 @@ package com.gouda.notquizlet.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Flashcard {
     @Id
     @GeneratedValue
     private long id;
+
+    @NotBlank
     private String term;
+
+    @NotBlank
     private String definition;
 
     public long getId() {

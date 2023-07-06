@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="~{/fragments/general.html :: header-css}">
+    <title>New Set</title>
+</head>
+<body>
+<header th:insert="~{/fragments/general.html :: header}"></header>
+
+<div class="container">
+    <form class="set-form" th:action="@{/new-set}" method="post">
+        <div class="row card-form template">
+            <div class="col-sm">
+                <label for="term">Term</label>
+                <input type="text" class="form-control term user-select-none" id="term" placeholder="Cats">
+            </div>
+            <div class="col-sm">
+                <label for="definition">Definition</label>
+                <input type="text" class="form-control definition user-select-none" id="definition" placeholder="Little guys">
+            </div>
+        </div>
+
+        <div class="row card-form">
+            <div class="col-sm">
+                <label for="term0">Term</label>
+                <input type="text" class="form-control term user-select-none" name="term" id="term0" placeholder="Cats">
+            </div>
+            <div class="col-sm">
+                <label for="definition0">Definition</label>
+                <input type="text" class="form-control definition user-select-none" name="definition" id="definition0" placeholder="Little guys">
+            </div>
+        </div>
+
+        <div class="row card-button">
+            <button type="button" class="btn btn-primary rounded mx-4">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512">
+                    <path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
+                </svg>
+            </button>
+        </div>
+
+<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+
+        <div class="row">
+            <button type="submit" class="btn btn-primary rounded mx-4">
+                Create Set
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    let numCards = 0;
+    const cardTemplate = document.querySelector(".card-form.template");
+    const cardButton = document.querySelector(".card-button");
+
+    cardButton.onclick = (event) => {
+      numCards++;
+      let newCard = cardTemplate.cloneNode(true);
+      newCard.classList.remove("template");
+      newCard.querySelectorAll("label").forEach((label) => label.htmlFor = label.htmlFor + numCards);
+      newCard.querySelectorAll("input").forEach((input) => input.id = input.id + numCards);
+      newCard.querySelector(".term").name = "term";
+      newCard.querySelector(".definition").name = "definition";
+
+      cardButton.before(newCard);
+    };
+</script>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.gouda.notquizlet.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,15 @@ public class FlashSet {
 
     @ManyToOne
     @JoinColumn(name = "owner", referencedColumnName = "id")
+    @NotNull
     private User owner; //final?? how tf does spring boot work
     //private List<Integer> starred;
     //private String description;
     //private List<Tag> tags;
     //TODO: impl later
+
+    @Column(name = "enabled")
+    private boolean enabled;
 
 
     public long getId() {
@@ -58,5 +63,13 @@ public class FlashSet {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

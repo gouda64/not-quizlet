@@ -25,8 +25,6 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    private String passwordMatching;
-
     @Column(name = "email", unique = true)
     @Email
     @NotNull
@@ -76,14 +74,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPasswordMatching() {
-        return passwordMatching;
-    }
-
-    public void setPasswordMatching(String passwordMatching) {
-        this.passwordMatching = passwordMatching;
     }
 
     public Provider getProvider() {

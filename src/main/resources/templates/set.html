@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="~{/fragments/general.html :: header-css}">
+    <title>Home</title>
+</head>
+<body>
+<header th:insert="~{/fragments/general.html :: header}"></header>
+
+<div class="card-study">
+    <div class="carousel user-select-none my-5 mx-auto d-flex align-items-center justify-content-center shadow" style="height: 20em; width:30em;">
+
+    </div>
+    <div class="controls d-flex align-items-center justify-content-center">
+        <button type="button" class="back-btn btn btn-primary rounded mx-4"> < </button>
+        <button type="button" class="for-btn btn btn-primary rounded mx-4"> > </button>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const cards = /*[[${set.flashcards}]]*/ "";
+    const carousel = document.querySelector(".carousel");
+    const forward = document.querySelector(".for-btn");
+    const backward = document.querySelector(".back-btn");
+
+    let index = 0;
+    carousel.textContent = cards[index].term;
+    let onTerm = true;
+
+    carousel.onclick = flipCard;
+
+    function flipCard() {
+        if (onTerm) {
+            onTerm = false;
+            carousel.textContent = cards[index].definition;
+        }
+        else {
+            onTerm = true;
+            carousel.textContent = cards[index].term;
+        }
+    }
+
+    forward.onclick = moveForward;
+    backward.onclick = moveBackward;
+
+    function moveForward() {
+        index++;
+        onTerm = true;
+        if (index >= cards.length) {
+            index = 0;
+        }
+        carousel.textContent = cards[index].term;
+    }
+
+    function moveBackward() {
+        index--;
+        onTerm = true;
+        if (index < 0) {
+            index = cards.length-1;
+        }
+        carousel.textContent = cards[index].term;
+    }
+
+
+</script>
+
+</body>
+</html>

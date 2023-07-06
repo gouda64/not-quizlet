@@ -1,5 +1,6 @@
 package com.gouda.notquizlet.controller;
 
+import com.gouda.notquizlet.entity.RegisteringUser;
 import com.gouda.notquizlet.entity.User;
 import com.gouda.notquizlet.service.UserService;
 import com.gouda.notquizlet.validator.SignUpValidator;
@@ -58,20 +59,25 @@ public class UserController {
             return "redirect:/";
         }
 
-        model.addAttribute("signupForm", new User());
+        model.addAttribute("signupForm", new RegisteringUser());
 
         return "signup";
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute("signupForm") User userForm, BindingResult bindingResult,
+    public String signUp(@ModelAttribute("signupForm") RegisteringUser userForm, BindingResult bindingResult,
                          HttpServletRequest request) {
         signUpValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return "signup";
         }
 
-        userService.save(userForm);
+        User user = new User();
+        user.setUsername(userForm.getUsername());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+
+        userService.save(user);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(userForm.getUsername());
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());

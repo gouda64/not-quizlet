@@ -1,5 +1,6 @@
 package com.gouda.notquizlet.validator;
 
+import com.gouda.notquizlet.entity.RegisteringUser;
 import com.gouda.notquizlet.entity.User;
 import com.gouda.notquizlet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class SignUpValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        User user = (User) o;
+        RegisteringUser user = (RegisteringUser) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "error.register.username_empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.register.password_empty");

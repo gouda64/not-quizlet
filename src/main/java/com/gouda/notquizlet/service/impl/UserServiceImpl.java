@@ -35,11 +35,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setPasswordMatching(user.getPassword());
         user.setSets(new HashSet<>());
         user.setProvider(Provider.LOCAL);
         user.setEnabled(true); //for now
-        //TODO: pepper?
+        //pepper?
         userRepository.save(user);
     }
 
@@ -75,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
         if (existUser == null) {
             User newUser = new User();
-            newUser.setUsername(email); //todo: maybe change later idk
+            newUser.setUsername(email); //maybe change
             newUser.setEmail(email);
             newUser.setProvider(Provider.GOOGLE); //change if adding more
             newUser.setEnabled(true);

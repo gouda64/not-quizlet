@@ -1,5 +1,14 @@
+html, body {
+    min-height: 100vh;
+    overflow: auto;
+}
+
 svg {
     width: 1em;
     height: 1em;
     vertical-align: -.125em;
+}
+
+.template {
+    display: none;
 }
