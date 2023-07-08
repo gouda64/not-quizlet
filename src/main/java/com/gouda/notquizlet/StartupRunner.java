@@ -1,6 +1,5 @@
 package com.gouda.notquizlet;
 
-import com.gouda.notquizlet.entity.Provider;
 import com.gouda.notquizlet.entity.User;
 import com.gouda.notquizlet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class StartupRunner implements CommandLineRunner {
         user.setPassword("pass");
         user.setEmail("foo@example.com");
         user.setEnabled(true);
-        user.setProvider(Provider.LOCAL);
+//        user.setProvider(Provider.LOCAL);
         userService.save(user);
     }
 }

@@ -31,8 +31,8 @@ public class User {
     @NotBlank
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    private Provider provider;
+//    @Enumerated(EnumType.STRING)
+//    private Provider provider;
 
     private boolean enabled;
 
@@ -76,13 +76,13 @@ public class User {
         this.email = email;
     }
 
-    public Provider getProvider() {
-        return provider;
-    }
-
-    public void setProvider(Provider provider) {
-        this.provider = provider;
-    }
+//    public Provider getProvider() {
+//        return provider;
+//    }
+//
+//    public void setProvider(Provider provider) {
+//        this.provider = provider;
+//    }
 
     public boolean isEnabled() {
         return enabled;

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:insert="~{/fragments/general.html :: header-css}">
+<head th:insert="~{/fragments/general.html :: head(title=${set.name})}">
     <title>Home</title>
 </head>
 <body>
 <header th:insert="~{/fragments/general.html :: header}"></header>
 
 <div class="card-study">
+    <div><span th:text="${set.name}"></span></div>
     <div class="carousel user-select-none my-5 mx-auto d-flex align-items-center justify-content-center shadow" style="height: 20em; width:30em;">
 
     </div>

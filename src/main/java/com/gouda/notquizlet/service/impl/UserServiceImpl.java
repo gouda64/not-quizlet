@@ -1,6 +1,5 @@
 package com.gouda.notquizlet.service.impl;
 
-import com.gouda.notquizlet.entity.Provider;
 import com.gouda.notquizlet.entity.User;
 import com.gouda.notquizlet.repository.UserRepository;
 import com.gouda.notquizlet.service.UserService;
@@ -36,7 +35,7 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setSets(new HashSet<>());
-        user.setProvider(Provider.LOCAL);
+//        user.setProvider(Provider.LOCAL);
         user.setEnabled(true); //for now
         //pepper?
         userRepository.save(user);
@@ -76,7 +75,7 @@ public class UserServiceImpl implements UserService {
             User newUser = new User();
             newUser.setUsername(email); //maybe change
             newUser.setEmail(email);
-            newUser.setProvider(Provider.GOOGLE); //change if adding more
+//            newUser.setProvider(Provider.GOOGLE); //change if adding more
             newUser.setEnabled(true);
 
             userRepository.save(newUser);

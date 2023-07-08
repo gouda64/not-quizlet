@@ -1,6 +1,8 @@
 package com.gouda.notquizlet.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
@@ -14,10 +16,12 @@ public class FlashSet {
     private long id;
 
     @Column(name = "name")
+    @NotBlank
     private String name;
 
     @Column(name = "cards")
     @OneToMany(cascade = CascadeType.ALL)
+    @NotEmpty
     private List<Flashcard> flashcards = new ArrayList<>();
 
     @ManyToOne

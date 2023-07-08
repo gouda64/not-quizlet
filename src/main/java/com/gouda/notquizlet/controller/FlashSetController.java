@@ -4,13 +4,12 @@ import com.gouda.notquizlet.entity.FlashSet;
 import com.gouda.notquizlet.entity.Flashcard;
 import com.gouda.notquizlet.service.FlashSetService;
 import com.gouda.notquizlet.service.UserService;
+import com.gouda.notquizlet.validator.FlashSetValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -19,18 +18,23 @@ import java.util.ArrayList;
 public class FlashSetController {
     private final FlashSetService flashSetService;
     private final UserService userService;
+    private final FlashSetValidator flashSetValidator;
 
     @Autowired
-    public FlashSetController(FlashSetService flashSetService, UserService userService) {
+    public FlashSetController(FlashSetService flashSetService, UserService userService,
+                              FlashSetValidator flashSetValidator) {
         this.flashSetService = flashSetService;
         this.userService = userService;
+        this.flashSetValidator = flashSetValidator;
     }
 
     @GetMapping("/new-set")
-    public String newSet(Principal principal) {
+    public String newSet(Principal principal, Model model) {
         if (principal == null) {
             return "redirect:/";
         }
+
+        model.addAttribute("setForm", new FlashSet());
 
         return "new-set";
     }
@@ -38,18 +42,26 @@ public class FlashSetController {
     @PostMapping("/new-set")
     public String makeSet(@RequestParam(value="term") String[] terms,
                           @RequestParam(value="definition") String[] definitions,
-                          Principal principal) {
-        //TODO: deal with validation
-        FlashSet setForm = new FlashSet();
-        setForm.setOwner(userService.findByUsername(principal.getName()));
+                          Principal principal, @ModelAttribute("setForm") FlashSet setForm,
+                          BindingResult bindingResult) {
         setForm.setFlashcards(new ArrayList<>());
 
         for (int i = 0; i < terms.length; i++) {
+            if (terms[i].length() == 0 || definitions[i].length() == 0) {
+                continue;
+            }
             Flashcard flashcard = new Flashcard();
-            flashcard.setTerm(terms[i]);
-            flashcard.setDefinition(definitions[i]);
+            flashcard.setTerm(terms[i].equals("") ? "..." : terms[i]);
+            flashcard.setDefinition(definitions[i].equals("") ? "..." : definitions[i]);
             setForm.getFlashcards().add(flashcard);
         }
+
+        flashSetValidator.validate(setForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "new-set";
+        }
+
+        setForm.setOwner(userService.findByUsername(principal.getName()));
         setForm.setEnabled(true);
 
         flashSetService.save(setForm);

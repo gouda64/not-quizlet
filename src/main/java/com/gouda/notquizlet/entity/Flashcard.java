@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 public class Flashcard {
     @Id
     @GeneratedValue
-    private long id;
+    private long id; //TODO: figure out if need jakarta validation stuff
 
     @NotBlank
     private String term;

@@ -1,12 +1,10 @@
 package com.gouda.notquizlet.validator;
 
-import com.gouda.notquizlet.entity.RegisteringUser;
 import com.gouda.notquizlet.entity.User;
 import com.gouda.notquizlet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
@@ -19,46 +17,34 @@ public class SignUpValidator implements Validator {
     }
 
     @Override
-    public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
+    public boolean supports(Class<?> clazz) {
+        return User.class.equals(clazz);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        RegisteringUser user = (RegisteringUser) o;
+        User user = (User) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "error.register.username_empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.register.password_empty");
-
-        if (!user.getUsername().matches("\\S+")) {
-            errors.rejectValue("username", "error.register.username_spaces");
+        if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
+            errors.rejectValue("username", "error.register.username_size");
         }
-        if (user.getUsername().length() < 4) {
-            errors.rejectValue("username", "error.register.username_min");
-        }
-        if(user.getUsername().length() > 32){
-            errors.rejectValue("username","error.register.username_max");
+        if (!user.getUsername().matches("^[a-zA-Z0-9._$-]+$")) {
+            errors.rejectValue("username", "error.register.username_chars");
         }
 
         if (userService.findByUsername(user.getUsername()) != null) {
             errors.rejectValue("username", "error.register.username_unique");
         }
+
         if (userService.findByEmail(user.getEmail()) != null){
             errors.rejectValue("email", "error.register.email_unique");
         }
-        if (!user.getEmail().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+        if (!user.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             errors.rejectValue("email", "error.register.email_valid");
         }
 
-        if (user.getPassword().length() < 8) {
-            errors.rejectValue("password", "error.register.password_min");
-        }
-        if (user.getPassword().length() > 32){
-            errors.rejectValue("password", "error.register.password_max");
-        }
-
-        if (!user.getPasswordMatching().equals(user.getPassword())) {
-            errors.rejectValue("passwordMatching", "error.register.password_match");
+        if (user.getPassword().length() < 8 || user.getPassword().length() > 128) {
+            errors.rejectValue("password", "error.register.password_size");
         }
     }
 }
