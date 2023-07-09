@@ -36,7 +36,7 @@ public class FlashSetController {
 
         model.addAttribute("setForm", new FlashSet());
 
-        return "new-set";
+        return "set/new-set";
     }
 
     @PostMapping("/new-set")
@@ -44,6 +44,7 @@ public class FlashSetController {
                           @RequestParam(value="definition") String[] definitions,
                           Principal principal, @ModelAttribute("setForm") FlashSet setForm,
                           BindingResult bindingResult) {
+        setForm.setOwner(userService.findByUsername(principal.getName()));
         setForm.setFlashcards(new ArrayList<>());
 
         for (int i = 0; i < terms.length; i++) {
@@ -58,10 +59,9 @@ public class FlashSetController {
 
         flashSetValidator.validate(setForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "new-set";
+            return "set/new-set";
         }
 
-        setForm.setOwner(userService.findByUsername(principal.getName()));
         setForm.setEnabled(true);
 
         flashSetService.save(setForm);
@@ -83,6 +83,40 @@ public class FlashSetController {
             return "error/404";
         }
 
-        return "set";
+        return "set/set";
+    }
+
+    @GetMapping("/sets/{setId}/flashcards")
+    public String flashcards(@PathVariable long setId, Principal principal, Model model) {
+        FlashSet set = flashSetService.findById(setId);
+
+        if (set != null && set.isEnabled()) {
+            model.addAttribute("set", set);
+        }
+        else if (set != null && set.getOwner().getUsername().equals(principal.getName())) {
+            return "redirect:/sets/" + setId + "/edit";
+        }
+        else {
+            return "error/404";
+        }
+
+        return "set/flashcards";
+    }
+
+    @GetMapping("/sets/{setId}/write")
+    public String write(@PathVariable long setId, Principal principal, Model model) {
+        FlashSet set = flashSetService.findById(setId);
+
+        if (set != null && set.isEnabled()) {
+            model.addAttribute("set", set);
+        }
+        else if (set != null && set.getOwner().getUsername().equals(principal.getName())) {
+            return "redirect:/sets/" + setId + "/edit";
+        }
+        else {
+            return "error/404";
+        }
+
+        return "set/write";
     }
 }

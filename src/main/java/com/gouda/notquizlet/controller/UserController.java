@@ -49,7 +49,7 @@ public class UserController {
             return "error/404";
         }
 
-        return "user";
+        return "user/user";
     }
 
     @GetMapping("/signup")
@@ -60,7 +60,7 @@ public class UserController {
 
         model.addAttribute("signupForm", new User());
 
-        return "signup";
+        return "user/signup";
     }
 
     @PostMapping("/signup")
@@ -68,7 +68,7 @@ public class UserController {
                          HttpServletRequest request) {
         signUpValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "signup";
+            return "user/signup";
         }
 
         userService.save(userForm);
@@ -89,7 +89,7 @@ public class UserController {
 
         model.addAttribute("loginForm", new User());
 
-        return "login";
+        return "user/login";
     }
 
     @PostMapping("/login")

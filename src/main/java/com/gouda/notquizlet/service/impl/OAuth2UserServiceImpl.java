@@ -1,6 +1,6 @@
 package com.gouda.notquizlet.service.impl;
 
-import com.gouda.notquizlet.entity.OAuth2UserImpl;
+import com.gouda.notquizlet.util.OAuth2UserImpl;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;

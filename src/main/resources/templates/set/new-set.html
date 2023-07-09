@@ -9,8 +9,8 @@
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text" class="form-control user-select-none" id="title" th:field="*{name}" placeholder="Pets" required>
-        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-<!--        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('flashcards')}" th:errors="*{flashcards}"></div>-->
+        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('flashcards')}" th:errors="*{flashcards}"></div>
         <div class="invalid-feedback warning"><span th:text="#{errors.set.size}"></span></div>
     </div>
 
@@ -41,6 +41,8 @@
         </button>
     </div>
 </form>
+
+<footer th:insert="~{/fragments/general.html :: footer}"></footer>
 
 <script th:inline="javascript">
 

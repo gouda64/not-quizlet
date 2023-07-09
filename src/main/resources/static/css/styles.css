@@ -65,12 +65,10 @@ button.rounded-circle {
    opacity: 1;
  }
 
- .form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ .form-control:-ms-input-placeholder {
    color: var(--faded-color, gray);
-   color: red;
  }
 
  .form-control::-ms-input-placeholder {
    color: var(--faded-color, gray);
-   color: red;
  }

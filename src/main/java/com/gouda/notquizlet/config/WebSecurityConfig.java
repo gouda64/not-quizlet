@@ -1,6 +1,6 @@
 package com.gouda.notquizlet.config;
 
-import com.gouda.notquizlet.entity.OAuth2UserImpl;
+import com.gouda.notquizlet.util.OAuth2UserImpl;
 import com.gouda.notquizlet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

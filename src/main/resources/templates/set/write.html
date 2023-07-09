@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="~{/fragments/general.html :: head(title=${set.name})}">
+</head>
+<body>
+<header th:insert="~{/fragments/general.html :: header}"></header>
+<header th:insert="~{/fragments/set-stuff.html :: header(section='Write')}"></header>
+
+<div class="card-study mb-5">
+    <div class="content">
+        <div class="answering my-5 mx-auto d-flex flex-column align-items-center justify-content-center">
+            <div class="side-disp d-flex align-items-center justify-content-center" style="height: 16rem; width:24rem;">
+            </div>
+            <input type="text" id="answer" autocomplete="off">
+            <button type="button" class="submit-answer btn btn-primary">Answer</button>
+        </div>
+        
+        <div class="wrong my-5 mx-auto d-none d-flex flex-column align-items-center justify-content-center">
+            <h1 style="color: red;">Wrong</h1>
+            <div>
+                Prompt: <span class="prompt"></span>
+            </div>
+            <div>
+                You said: <span class="wrong-ans"></span>
+            </div>
+            <div>
+                Correct Answer: <span class="right-ans"></span>
+            </div>
+            <button type="button" class="continue btn btn-primary">Continue</button>
+        </div>
+        
+        <div class="section-summary d-none my-5 mx-auto d-flex flex-column align-items-center justify-content-center">
+            End of round
+            <button type="button" class="continue btn btn-primary">Continue</button>
+        </div>
+
+        <div class="end d-none my-5 mx-auto d-flex flex-column align-items-center justify-content-center">
+            END
+            <button type="button" class="continue btn btn-primary">Reset</button>
+        </div>
+    </div>
+
+
+</div>
+
+<footer th:insert="~{/fragments/general.html :: footer}"></footer>
+
+<script th:inline="javascript">
+
+</script>
+
+<script th:inline="javascript">
+    const cards = /*[[${set.flashcards}]]*/ "";
+    let pool = [...cards];
+   
+    const answeringDisp = document.querySelector(".answering");
+    const wrongDisp = document.querySelector(".wrong");
+    const summaryDisp = document.querySelector(".section-summary");
+    const endDisp = document.querySelector(".end");
+
+    answeringDisp.querySelector(".submit-answer").onclick = flipCard;
+    wrongDisp.querySelector(".continue").onclick = moveForward;
+    summaryDisp.querySelector(".continue").onclick = showCard;
+    endDisp.querySelector(".continue").onclick = reset;
+
+    let index = 0;
+    showCard();
+
+    function flipCard() {
+        let ans = answeringDisp.querySelector("#answer").value;
+        if (ans === pool[index].term) {
+            pool.splice(index, 1);
+            index--;
+            moveForward();
+        }
+        else {
+            showWrong(ans);
+        }
+    }
+
+    function showWrong(ans) {
+        answeringDisp.classList.add("d-none");
+        summaryDisp.classList.add("d-none");
+        
+        wrongDisp.classList.remove("d-none");
+        wrongDisp.querySelector(".prompt").textContent = pool[index].definition;
+        wrongDisp.querySelector(".wrong-ans").textContent = ans;
+        wrongDisp.querySelector(".right-ans").textContent = pool[index].term;
+    }
+    function showCard() {
+        wrongDisp.classList.add("d-none");
+        summaryDisp.classList.add("d-none");
+        
+        answeringDisp.classList.remove("d-none");
+        answeringDisp.querySelector(".side-disp").textContent = pool[index].definition;
+        answeringDisp.querySelector("#answer").value = "";
+        answeringDisp.querySelector("#answer").focus();
+    }
+    function showSummary() {
+        wrongDisp.classList.add("d-none");
+        answeringDisp.classList.add("d-none");
+
+        summaryDisp.classList.remove("d-none");
+
+    }
+    function reset() {
+        endDisp.classList.add("d-none");
+        pool = [...cards];
+        answeringDisp.querySelector("#answer").value = "";
+        index = 0;
+        showCard();
+    }
+
+
+    function moveForward() {
+        if (pool.length == 0) {
+            wrongDisp.classList.add("d-none");
+            answeringDisp.classList.add("d-none");
+            summaryDisp.classList.add("d-none");
+            endDisp.classList.remove("d-none");
+            return;
+        }
+
+        index++;
+        if (index >= pool.length) {
+            index = 0;
+            showSummary();
+            return;
+        }
+        showCard();
+    }
+</script>
+
+</body>
+</html>

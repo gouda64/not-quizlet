@@ -41,6 +41,8 @@
         <p class="mt-2">Already signed up? <a href="/login">Log in</a> instead.</p>
     </div>
 
+    <footer th:insert="~{/fragments/general.html :: footer}"></footer>
+
     <script th:inline="javascript">
         const form = document.querySelector(".needs-validation");
         const nameGroup = document.querySelector(".username-group");

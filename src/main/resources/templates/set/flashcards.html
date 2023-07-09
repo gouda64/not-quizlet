@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="~{/fragments/general.html :: head(title=${set.name})}">
-    <title>Home</title>
 </head>
 <body>
 <header th:insert="~{/fragments/general.html :: header}"></header>
+<header th:insert="~{/fragments/set-stuff.html :: header(section='Flashcards')}"></header>
 
-<div class="card-study">
-    <div><span th:text="${set.name}"></span></div>
-    <div class="carousel user-select-none my-5 mx-auto d-flex align-items-center justify-content-center shadow" style="height: 20em; width:30em;">
+<div class="card-study mb-5">
+    <div class="carousel user-select-none my-5 mx-auto d-flex align-items-center justify-content-center shadow" style="height: 20rem; width:30rem;">
 
     </div>
     <div class="controls d-flex align-items-center justify-content-center">
-        <button type="button" class="back-btn btn btn-primary rounded mx-4"> < </button>
-        <button type="button" class="for-btn btn btn-primary rounded mx-4"> > </button>
+        <button type="button" class="back-btn btn btn-primary rounded mx-4"><</button>
+        <button type="button" class="for-btn btn btn-primary rounded mx-4">></button>
     </div>
 </div>
+
+<footer th:insert="~{/fragments/general.html :: footer}"></footer>
+
+<script th:inline="javascript">
+
+</script>
 
 <script th:inline="javascript">
     const cards = /*[[${set.flashcards}]]*/ "";
@@ -60,8 +65,6 @@
         }
         carousel.textContent = cards[index].term;
     }
-
-
 </script>
 
 </body>
