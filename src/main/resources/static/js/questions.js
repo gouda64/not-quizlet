@@ -18,6 +18,19 @@ function genTest(length) {
     return arr;
 }
 
+function newFlash(card) {
+    return {
+        type: "f",
+        def: card.definition,
+        term: card.term,
+        prompt: card.definition,
+        answer: card.term,
+        checkAnswer(ans) {
+            return ans;
+        },
+    };
+}
+
 function newTF(card) {
     let isT = Math.random() < 0.5 ? true : false;
     let comp = card;

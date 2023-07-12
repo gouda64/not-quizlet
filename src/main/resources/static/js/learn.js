@@ -1,12 +1,13 @@
 const roundLength = 5;
-const stages = [newTF, newMC, newWritten, newWritten];
+const stages = [newFlash, newTF, newMC, newWritten, newWritten];
 const learningSpeed = 1;
 
 const writTemplate = document.querySelector(".written");
 const mcTemplate = document.querySelector(".mc");
 const tfTemplate = document.querySelector(".tf");
+const flashTemplate = document.querySelector(".flash");
 
-const progress = Array(cards.length).fill(3);
+const progress = Array(cards.length).fill(0);
 const questionContainer = document.querySelector(".question-container");
 const answerButt = document.querySelector(".submit-answer");
 const wrongDisp = document.querySelector(".wrong");
@@ -49,8 +50,14 @@ function advance() {
     else {
         questions[0].change -= learningSpeed;
         questions.push(questions[0]);
-        showWrong(answer, questions[0]);
-        questions.splice(0, 1);
+        if (questions[0].type === "f") {
+            questions.splice(0, 1);
+            showQuestion(questions[0]);
+        }
+        else {
+            showWrong(answer, questions[0]);
+            questions.splice(0, 1);
+        }
     }
 }
 
@@ -75,6 +82,12 @@ function getAnswer(q) {
         }
         return q.querySelector(".trueIn").checked;
     }
+    if (q.classList.contains("flash")) {
+        if (!q.querySelector(".gotIn").checked && !q.querySelector(".noGotIn").checked) {
+            return null;
+        }
+        return q.querySelector(".gotIn").checked;
+    }
 }
 
 function showQuestion(q) {
@@ -97,6 +110,21 @@ function showQuestion(q) {
             newQ.querySelectorAll(".option").forEach((option, ind) => {
                 option.querySelector("input").id = option.querySelector("input").id + 1;
                 option.querySelector("label").htmlFor = option.querySelector("input").id;
+            });
+            break;
+        case "f":
+            newQ = flashTemplate.cloneNode(true);
+            newQ.querySelectorAll(".option").forEach((option, ind) => {
+                option.querySelector("input").id = option.querySelector("input").id + 1;
+                option.querySelector("label").htmlFor = option.querySelector("input").id;
+            });
+            answerButt.classList.add("d-none");
+            newQ.addEventListener("click", (event) => {
+                questionContainer.querySelector(".prompt").textContent = questions[0].term;
+                questionContainer.querySelectorAll(".option").forEach((option) => {
+                    option.classList.remove("d-none")
+                });
+                answerButt.classList.remove("d-none");
             });
             break;
     }

@@ -92,6 +92,19 @@
         <div class="d-none right-term"></div>
     </fieldset>
 
+    <div class="flash question template form-group">
+        <div class="prompt d-flex align-items-center justify-content-center">
+        </div>
+        <div class="option d-none form-check">
+            <input class="form-check-input noGotIn" name="ng" type="radio" id="noGotIt">
+            <label class="form-check-label" for="gotIt" th:text="#{set.questions.no_got_it}"></label>
+        </div>
+        <div class="option d-none form-check">
+            <input class="form-check-input gotIn" name="ng" type="radio" id="gotIt">
+            <label class="form-check-label" for="gotIt" th:text="#{set.questions.got_it}"></label>
+        </div>
+    </div>
+
     <script type="text/javascript" th:src="@{/js/questions.js}"></script>
 </div>
 

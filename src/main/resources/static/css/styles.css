@@ -9,9 +9,9 @@ html, body {
 }
 
 svg {
-    width: 1em;
-    height: 1em;
-    vertical-align: -.125em;
+    width: 1rem;
+    height: 1rem;
+    vertical-align: -.125rem;
     display: block;
 }
 
@@ -36,11 +36,11 @@ label {
 }
 
 button.rounded-circle {
-    padding: .75em;
+    padding: .75rem;
 }
 
 .form-group {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 }
 
 .divider {
@@ -57,7 +57,7 @@ button.rounded-circle {
     border-bottom: 1px solid;
 }
 .divider span {
-    margin: 0 1em;
+    margin: 0 1rem;
 }
 
 .form-control::placeholder {
