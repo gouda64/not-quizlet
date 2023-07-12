@@ -32,7 +32,7 @@ label {
 }
 
 .template {
-    display: none;
+    display: none !important;
 }
 
 button.rounded-circle {

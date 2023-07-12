@@ -1,72 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:insert="~{/fragments/general.html :: head(title=${set.name})}">
+<head th:replace="~{/fragments/general.html :: head(title=${set.name})}">
 </head>
 <body>
-<header th:insert="~{/fragments/general.html :: header}"></header>
+<header th:replace="~{/fragments/general.html :: header}"></header>
 
-<div class="card-study">
-    <div><span th:text="${set.name}"></span></div>
-    <div class="carousel user-select-none my-5 mx-auto d-flex align-items-center justify-content-center shadow" style="height: 20em; width:30em;">
+<div th:text="${set.name}"></div>
 
-    </div>
-    <div class="controls d-flex align-items-center justify-content-center">
-        <button type="button" class="back-btn btn btn-primary rounded mx-4"><</button>
-        <button type="button" class="for-btn btn btn-primary rounded mx-4">></button>
-<!--        TODO: not centered (use svg), better semantic meaning-->
-    </div>
+<div th:replace="~{/fragments/set-stuff.html :: flashcards}"></div>
+
+<div class="mb-4">
+    <a th:href="${set.id + '/flashcards'}"><button type="button" class="btn btn-primary rounded mx-4">Flashcards</button></a>
+    <a th:href="${set.id + '/learn'}"><button type="button" class="btn btn-primary rounded mx-4">Learn</button></a>
+    <a th:href="${set.id + '/write'}"><button type="button" class="btn btn-primary rounded mx-4">Write</button></a>
+    <a th:href="${set.id + '/test'}"><button type="button" class="btn btn-primary rounded mx-4">Test</button></a>
 </div>
 
-<a th:href="${set.id + '/flashcards'}"><button type="button" class="btn btn-primary rounded mx-4">Flashcards</button></a>
+<footer th:replace="~{/fragments/general.html :: footer}"></footer>
 
-<a th:href="${set.id + '/write'}"><button type="button" class="btn btn-primary rounded mx-4">Write</button></a>
-
-<footer th:insert="~{/fragments/general.html :: footer}"></footer>
-
-<script th:inline="javascript">
-    const cards = /*[[${set.flashcards}]]*/ "";
-    const carousel = document.querySelector(".carousel");
-    const forward = document.querySelector(".for-btn");
-    const backward = document.querySelector(".back-btn");
-
-    let index = 0;
-    carousel.textContent = cards[index].term;
-    let onTerm = true;
-
-    carousel.onclick = flipCard;
-
-    function flipCard() {
-        if (onTerm) {
-            onTerm = false;
-            carousel.textContent = cards[index].definition;
-        }
-        else {
-            onTerm = true;
-            carousel.textContent = cards[index].term;
-        }
-    }
-
-    forward.onclick = moveForward;
-    backward.onclick = moveBackward;
-
-    function moveForward() {
-        index++;
-        onTerm = true;
-        if (index >= cards.length) {
-            index = 0;
-        }
-        carousel.textContent = cards[index].term;
-    }
-
-    function moveBackward() {
-        index--;
-        onTerm = true;
-        if (index < 0) {
-            index = cards.length-1;
-        }
-        carousel.textContent = cards[index].term;
-    }
-</script>
 
 </body>
 </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{/fragments/general.html :: head(title='Test - ' + ${set.name})}">
+</head>
+<body>
+<header th:replace="~{/fragments/general.html :: header}"></header>
+<header th:replace="~{/fragments/set-stuff.html :: header(section='Test')}"></header>
+
+<div class="grade-section d-none">
+
+</div>
+
+<form class="test-section mb-4 d-flex flex-column align-items-center justify-content-center" autocomplete="off">
+    <div th:replace="~{/fragments/set-stuff.html :: q-templates}"></div>
+
+    <button type="button" class="grade btn btn-primary">Grade Test</button>
+    <button type="button" class="new-test btn btn-primary">New Test</button>
+</form>
+
+<script th:inline="javascript">
+    const cards = /*[[${set.flashcards}]]*/ "";
+</script>
+<script type="text/javascript" th:src="@{/js/test.js}"></script>
+
+<footer th:replace="~{/fragments/general.html :: footer}"></footer>
+
+</body>
+</html>

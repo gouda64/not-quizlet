@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:insert="~{/fragments/general.html :: head(title=#{singleton.log_in})}">
+<head th:replace="~{/fragments/general.html :: head(title=#{singleton.log_in})}">
 </head>
 <body>
-    <header th:insert="~{/fragments/general.html :: header}"></header>
+    <header th:replace="~{/fragments/general.html :: header}"></header>
 
     <div class="px-5 py-3">
         <a th:href="@{/oauth2/authorization/google}">
@@ -30,7 +30,7 @@
         <p class="mt-2">Don't have an account yet? <a href="/signup">Sign up!</a></p>
     </div>
 
-    <footer th:insert="~{/fragments/general.html :: footer}"></footer>
+    <footer th:replace="~{/fragments/general.html :: footer}"></footer>
 
 </body>
 </html>

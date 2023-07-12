@@ -34,16 +34,35 @@ public class StartupRunner implements CommandLineRunner {
 //        user.setProvider(Provider.LOCAL);
         userService.save(user);
 
-        FlashSet flashSet = new FlashSet();
-        flashSet.setEnabled(true);
-        flashSet.setName("fish");
-        flashSet.setOwner(user);
-        flashSet.setFlashcards(new ArrayList<>(List.of(new Flashcard(), new Flashcard())));
-        flashSet.getFlashcards().get(0).setTerm("tuna");
-        flashSet.getFlashcards().get(0).setDefinition("high in deliciousness and mercury");
-        flashSet.getFlashcards().get(1).setTerm("sole");
-        flashSet.getFlashcards().get(1).setDefinition("sounds like part of a shoe");
+        FlashSet flashSet1 = new FlashSet();
+        flashSet1.setEnabled(true);
+        flashSet1.setName("fish");
+        flashSet1.setOwner(user);
+        flashSet1.setFlashcards(new ArrayList<>(List.of(new Flashcard(), new Flashcard())));
+        flashSet1.getFlashcards().get(0).setTerm("tuna");
+        flashSet1.getFlashcards().get(0).setDefinition("high in deliciousness and mercury");
+        flashSet1.getFlashcards().get(1).setTerm("sole");
+        flashSet1.getFlashcards().get(1).setDefinition("sounds like part of a shoe");
+        for (int i = 0; i < 5; i++) {
+            Flashcard flashcard = new Flashcard();
+            flashcard.setTerm("t" + i);
+            flashcard.setDefinition("d" + i);
+            flashSet1.getFlashcards().add(flashcard);
+        }
 
-        flashSetService.save(flashSet);
+        FlashSet flashSet2 = new FlashSet();
+        flashSet2.setEnabled(true);
+        flashSet2.setName("long fish");
+        flashSet2.setOwner(user);
+        flashSet2.setFlashcards(new ArrayList<>());
+        for (int i = 0; i < 30; i++) {
+            Flashcard flashcard = new Flashcard();
+            flashcard.setTerm("t" + i);
+            flashcard.setDefinition("d" + i);
+            flashSet2.getFlashcards().add(flashcard);
+        }
+
+        flashSetService.save(flashSet1);
+        flashSetService.save(flashSet2);
     }
 }

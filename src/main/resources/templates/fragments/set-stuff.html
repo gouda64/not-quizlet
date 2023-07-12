@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:insert="~{/fragments/general.html :: head(main=true)}">
+<head th:replace="~{/fragments/general.html :: head(main=true)}">
 </head>
 
 <body>
@@ -10,11 +10,10 @@
 <!--        TODO: redesign (thing on side?)-->
         <div class="navbar-brand me-auto" th:text="${section}"></div>
 
-        <div class="position-absolute start-50 end-50" th:text="${set.name}"></div>
-<!--        not centered, not that important-->
+        <div class="position-absolute start-50 translate-middle-x" th:text="${set.name}"></div>
 
         <button class="btn btn-primary mx-4 mr-auto" type="button">
-            <span th:text="#{singleton.options}"></span>
+            <span th:text="#{set.options}"></span>
         </button>
 
         <a th:href="${'/sets/' + set.id}">
@@ -25,6 +24,89 @@
             </button>
         </a>
     </nav>
+</div>
+
+<div th:fragment="flashcards" class="card-study mb-4 d-flex flex-column align-items-center justify-content-center">
+    <div class="progress"></div>
+    <div class="carousel user-select-none mb-4 mt-3 mx-auto d-flex align-items-center justify-content-center shadow" style="height: 20rem; width:30rem;">
+
+    </div>
+    <div class="controls d-flex align-items-center justify-content-center" style="width: 30rem;">
+        <button type="button" class="back-btn btn btn-primary rounded mx-4"><</button>
+        <button type="button" class="for-btn btn btn-primary rounded mx-4">></button>
+        <div class="form-check form-switch">
+            <input type="checkbox" id="shuffle" value="" class="shuffle form-check-input ms-auto">
+            <label for="shuffle" class="form-check-label user-select-none">Shuffle</label>
+        </div>
+
+    </div>
+    <!--        TODO: restyle shuffle (use svg)-->
+
+    <script th:inline="javascript">
+        const cardSrc = /*[[${set.flashcards}]]*/ "";
+    </script>
+    <script type="text/javascript" th:src="@{/js/flashcards.js}"></script>
+
+</div>
+
+<div th:fragment="q-templates">
+    <div class="written question template form-group">
+        <div class="prompt d-flex align-items-center justify-content-center">
+        </div>
+        <input type="text" class="form-control">
+        <div class="invalid-feedback"></div>
+    </div>
+
+    <fieldset class="mc question template form-group">
+        <legend class="prompt d-flex align-items-center justify-content-center">
+        </legend>
+        <div class="option form-check">
+            <input class="form-check-input" name="mc" type="radio" id="mcOpt1">
+            <label class="form-check-label" for="mcOpt1"></label>
+        </div>
+        <div class="option form-check">
+            <input class="form-check-input" name="mc" type="radio" id="mcOpt2">
+            <label class="form-check-label" for="mcOpt2"></label>
+        </div>
+        <div class="option form-check">
+            <input class="form-check-input" name="mc" type="radio" id="mcOpt3">
+            <label class="form-check-label" for="mcOpt3"></label>
+        </div>
+        <div class="option form-check">
+            <input class="form-check-input"  name="mc" type="radio" id="mcOpt4">
+            <label class="form-check-label" for="mcOpt4"></label>
+        </div>
+    </fieldset>
+
+    <fieldset class="tf question template form-group my-5">
+        <legend class="prompt d-flex align-items-center justify-content-center">
+        </legend>
+        <div class="option form-check">
+            <input class="form-check-input trueIn" name="tf" type="radio" id="true">
+            <label class="form-check-label" for="true" th:text="#{set.questions.true}"></label>
+        </div>
+        <div class="option form-check">
+            <input class="form-check-input falseIn" name="tf" type="radio" id="false">
+            <label class="form-check-label" for="false" th:text="#{set.questions.false}"></label>
+        </div>
+        <div class="d-none right-term"></div>
+    </fieldset>
+
+    <script type="text/javascript" th:src="@{/js/questions.js}"></script>
+</div>
+
+<div th:fragment="wrong-disp" class="wrong my-5 mx-auto d-none d-flex flex-column align-items-center justify-content-center">
+    <h1 style="color: red;">Wrong</h1>
+    <div>
+        Prompt: <span class="prompt"></span>
+    </div>
+    <div>
+        You said: <span class="wrong-ans"></span>
+    </div>
+    <div>
+        Correct Answer: <span class="right-ans"></span>
+    </div>
+    <button type="button" class="continue btn btn-primary mt-2">Continue</button>
 </div>
 
 </body>

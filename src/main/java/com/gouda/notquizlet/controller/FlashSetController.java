@@ -119,4 +119,38 @@ public class FlashSetController {
 
         return "set/write";
     }
+
+    @GetMapping("/sets/{setId}/test")
+    public String test(@PathVariable long setId, Principal principal, Model model) {
+        FlashSet set = flashSetService.findById(setId);
+
+        if (set != null && set.isEnabled()) {
+            model.addAttribute("set", set);
+        }
+        else if (set != null && set.getOwner().getUsername().equals(principal.getName())) {
+            return "redirect:/sets/" + setId + "/edit";
+        }
+        else {
+            return "error/404";
+        }
+
+        return "set/test";
+    }
+
+    @GetMapping("/sets/{setId}/learn")
+    public String learn(@PathVariable long setId, Principal principal, Model model) {
+        FlashSet set = flashSetService.findById(setId);
+
+        if (set != null && set.isEnabled()) {
+            model.addAttribute("set", set);
+        }
+        else if (set != null && set.getOwner().getUsername().equals(principal.getName())) {
+            return "redirect:/sets/" + setId + "/edit";
+        }
+        else {
+            return "error/404";
+        }
+
+        return "set/learn";
+    }
 }
