@@ -16,6 +16,11 @@
     <a th:href="${set.id + '/test'}"><button type="button" class="btn btn-primary rounded mx-4">Test</button></a>
 </div>
 
+<div th:each="card : ${set.flashcards}" class="mx-3 d-flex justify-content-between">
+    <span th:text="${card.term}"></span>
+    <span th:text="${card.definition}"></span>
+</div>
+
 <footer th:replace="~{/fragments/general.html :: footer}"></footer>
 
 

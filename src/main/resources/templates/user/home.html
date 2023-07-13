@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{/fragments/general.html :: head(title='Home')}"></div>>
+</head>
+<body>
+<header th:replace="~{/fragments/general.html :: header}"></header>
+
+<h1 class="ms-5 my-2">Your Sets</h1>
+
+<div class="container g-2 mx-5">
+    <div class="row row-cols-5">
+        <a th:href="'/sets/' + ${set.id}" th:each="set : ${user.sets}">
+            <button type="button" class="btn">
+                <h4 th:text="${set.name}"></h4>
+                <div th:text="${set.flashcards.size()} + ' ' + terms"></div>
+            </button>
+        </a>
+    </div>
+</div>
+
+<footer th:replace="~{/fragments/general.html :: footer}"></footer>
+</body>
+</html>
